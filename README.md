@@ -1,22 +1,27 @@
-Regular flow
+Install
+===
+```
+git clone --recursive https://github.com/benishor/aoc2020.git
+./build
+```
+
+Dev flow
 ===
 1) edit file `dayX/main.cpp`
 2) include `solution.h` and write a class inheriting `aoc::solution`
 3) implement solution in `run()`
 4) write tests to assert the desired behaviour in `register_tests()`
 5) run tests by calling the binary with ` --test`
-6) run solution on STDIN data by calling the binary with no arguments
+6) run solution on `input` file by calling the binary with no arguments
 7) run solution on data stored in a file by calling the binary with `path/to/data` argument 
 
 ```
 #include "solution.h"
 
-// Inherit Solution in order to benefit from boilerplate reduction. 
-class day1 : public solution {
+class day1 : public aoc::solution {
 public:
 
     void run(std::istream& in, std::ostream& out) override {
-        // Here is where the main problem solving algorithm lives.
         // Read input data from "in" and write results to "out"
     }
 
@@ -33,20 +38,20 @@ int main() {
 }
 ```
 
-Running tests
+Running day1 tests
 ===
 ```
 ./build
 ./run 1 --test
 ```
 
-Running solution on "input" file residing in the day1/ folder
+Running day1 on "input" file residing in the day1/ folder
 ===
 ```
 ./build
 ./run 1 
 ```
-Running solution on a particular input file
+Running day1 on a particular input file
 ===
 ```
 ./build
