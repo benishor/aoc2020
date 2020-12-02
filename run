@@ -1,0 +1,35 @@
+#!/bin/bash
+
+BASEDIR="$(realpath $(dirname $0))"
+BUILDDIR="${BASEDIR}/build_dir"
+DAY="${1}"
+
+[ -z ${DAY} ] && {
+    echo "Usage: $0 [--test]<day>"
+    exit 1
+}
+RE='^[1-9][0-9]*$'
+[[ "${DAY}" =~ ${RE} ]] || {
+    echo "Not a valid number: '${DAY}'"
+    exit 2
+}
+(( ${DAY} > 25 )) && {
+    echo "Day number out of range: '${DAY}'"
+    exit 3
+}
+
+EXEC="${BUILDDIR}/day${DAY}"
+[ ! -x ${EXEC} ] && {
+    echo "Executable for day '${DAY}' not found"
+    exit 4
+}
+
+if [ $# -lt 2 ]; then
+    ${EXEC} < ${2:-${BASEDIR}/day${DAY}/input}
+else
+    if [ "${2}" = "--test" ]; then
+        ${EXEC} --test
+    else
+        ${EXEC} ${2}
+    fi
+fi
