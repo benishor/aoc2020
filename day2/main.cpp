@@ -2,13 +2,11 @@
 #include "solution.h"
 #include <algorithm>
 
-using namespace std;
-
 struct password_info {
     int low;
     int high;
     char letter;
-    string text;
+    std::string text;
 };
 
 template<>
@@ -29,16 +27,16 @@ struct fmt::formatter<password_info> {
 class day2 : public aoc::solution {
 public:
     void run(std::istream& in, std::ostream& out) override {
-        std::vector<password_info> passwords = read_passwords(in);
+        auto passwords = read_passwords(in);
         out << count_if(passwords.begin(), passwords.end(), is_password_valid_1) << std::endl;
         out << count_if(passwords.begin(), passwords.end(), is_password_valid_2) << std::endl;
     }
 
-    static vector<password_info> read_passwords(istream& in) {
-        static const regex rePassword("^(\\d+)-(\\d+) ([a-zA-Z]): (.*)$");
-        vector<password_info> passwords;
-        for (string line; getline(in, line);) {
-            smatch m{};
+    static std::vector<password_info> read_passwords(std::istream& in) {
+        static const std::regex rePassword("^(\\d+)-(\\d+) ([a-zA-Z]): (.*)$");
+        std::vector<password_info> passwords;
+        for (std::string line; getline(in, line);) {
+            std::smatch m{};
             if (regex_match(line, m, rePassword))
                 passwords.push_back(password_info{
                         .low = stoi(m[1].str()),
