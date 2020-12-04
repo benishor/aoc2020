@@ -1,11 +1,26 @@
 #include <iostream>
 #include "solution.h"
 #include <algorithm>
-#include <numeric>
 
 class day4 : public aoc::solution {
 public:
     void run(std::istream& in, std::ostream& out) override {
+        auto documents = read_documents(in);
+
+        auto valid_documents_1 = 0, valid_documents_2 = 0;
+        for (const auto& d : documents) {
+            if (are_fields_present(d)) {
+                valid_documents_1++;
+                if (are_fields_valid(d)) {
+                    valid_documents_2++;
+                }
+            }
+        }
+        out << valid_documents_1 << std::endl;
+        out << valid_documents_2 << std::endl;
+    }
+
+    static std::vector<std::map<std::string, std::string>> read_documents(std::istream& in) {
         std::vector<std::map<std::string, std::string>> documents;
 
         std::map<std::string, std::string> current_document;
@@ -29,30 +44,7 @@ public:
         if (!current_document.empty()) {
             documents.push_back(current_document);
         }
-
-//        for (auto &d : documents) {
-//            std::cout << "Document:" << std::endl;
-//            for (auto& [key, value] : d) {
-//                fmt::print("{}: {}\n", key, value);
-//            }
-//        }
-
-        auto valid_documents = 0;
-        for (auto& d : documents) {
-            if (are_fields_present(d)) {
-                valid_documents++;
-            }
-        }
-        out << valid_documents << std::endl;
-
-        valid_documents = 0;
-        for (auto& d : documents) {
-            if (are_fields_present(d) && are_fields_valid(d)) {
-                valid_documents++;
-            }
-        }
-        out << valid_documents << std::endl;
-
+        return documents;
     }
 
     static bool are_fields_present(const std::map<std::string, std::string>& document) {
@@ -66,49 +58,38 @@ public:
         return fields_found == 7;
     }
 
-    static bool is_valid_color(std::basic_string<char> color_string) {
-        const std::regex re("^#[0-9a-fA-f]{6}$");
-        std::smatch m{};
-        return std::regex_match(color_string, m, re);
-    }
-
-    static bool is_valid_eye_color(std::basic_string<char> color_string) {
-        static const std::string colors[] = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
-        for (auto& c : colors) {
-            if (color_string == c) return true;
-        }
-        return false;
-    }
-
-    static bool is_passport_id_valid(std::basic_string<char> pid) {
-        const std::regex re("^[0-9]{9}$");
-        std::smatch m{};
-        return std::regex_match(pid, m, re);
-    }
-
-    static bool is_four_digit_number(const std::basic_string<char>& text) {
-        const std::regex re("^[0-9]{4}$");
-        std::smatch m{};
-        return std::regex_match(text, m, re);
-    }
-
     static bool are_fields_valid(const std::map<std::string, std::string>& document) {
-        if (!is_four_digit_number(document.at("byr"))) return false;
-        int byr = std::stoi(document.at("byr"));
-        if (byr < 1920 || byr > 2002) return false;
+        return (is_valid_birth_year(document.at("byr")) &&
+                is_valid_issue_year(document.at("iyr")) &&
+                is_valid_expiration_year(document.at("eyr")) &&
+                is_valid_height(document.at("hgt")) &&
+                is_valid_hair_color(document.at("hcl")) &&
+                is_valid_eye_color(document.at("ecl")) &&
+                is_passport_id_valid(document.at("pid")));
+    }
 
-        if (!is_four_digit_number(document.at("iyr"))) return false;
-        int iyr = std::stoi(document.at("iyr"));
-        if (iyr < 2010 || iyr > 2020) return false;
+    static bool is_valid_birth_year(const std::string& text) {
+        if (!is_four_digit_number(text)) return false;
+        int eyr = std::stoi(text);
+        return (eyr >= 1920 && eyr <= 2002);
+    }
 
-        if (!is_four_digit_number(document.at("eyr"))) return false;
-        int eyr = std::stoi(document.at("eyr"));
-        if (eyr < 2020 || eyr > 2030) return false;
+    static bool is_valid_issue_year(const std::string& text) {
+        if (!is_four_digit_number(text)) return false;
+        int eyr = std::stoi(text);
+        return (eyr >= 2010 && eyr <= 2020);
+    }
 
-        auto hgt_with_units = document.at("hgt");
-        if (hgt_with_units.size() < 3) return false;
-        auto units = hgt_with_units.substr(hgt_with_units.size() - 2);
-        auto hgt = std::stoi(hgt_with_units.substr(0, hgt_with_units.size() - 2));
+    static bool is_valid_expiration_year(const std::string& text) {
+        if (!is_four_digit_number(text)) return false;
+        int eyr = std::stoi(text);
+        return (eyr >= 2020 && eyr <= 2030);
+    }
+
+    static bool is_valid_height(const std::string& text) {
+        if (text.size() < 3) return false;
+        auto units = text.substr(text.size() - 2);
+        auto hgt = std::stoi(text.substr(0, text.size() - 2));
         if (units == "cm") {
             if (hgt < 150 || hgt > 193) return false;
         } else if (units == "in") {
@@ -116,17 +97,30 @@ public:
         } else {
             return false;
         }
-
-        auto hcl = document.at("hcl");
-        if (!is_valid_color(hcl)) return false;
-
-        auto ecl = document.at("ecl");
-        if (!is_valid_eye_color(ecl)) return false;
-
-        auto pid = document.at("pid");
-        if (!is_passport_id_valid(pid)) return false;
-
         return true;
+    }
+
+    static bool is_valid_hair_color(const std::string& text) {
+        const std::regex re("^#[0-9a-fA-f]{6}$");
+        std::smatch m{};
+        return std::regex_match(text, m, re);
+    }
+
+    static bool is_valid_eye_color(const std::string& text) {
+        static const std::string colors[] = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
+        return std::any_of(begin(colors), end(colors), [&](auto a) { return a == text; });
+    }
+
+    static bool is_passport_id_valid(const std::string& text) {
+        const static std::regex re("^[0-9]{9}$");
+        std::smatch m{};
+        return std::regex_match(text, m, re);
+    }
+
+    static bool is_four_digit_number(const std::string& text) {
+        const static std::regex re("^[0-9]{4}$");
+        std::smatch m{};
+        return std::regex_match(text, m, re);
     }
 
     void register_tests() override {
