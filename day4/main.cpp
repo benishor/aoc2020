@@ -100,13 +100,13 @@ public:
     }
 
     static bool is_valid_hair_color(const std::string& text) {
-        const std::regex re("^#[0-9a-fA-f]{6}$");
+        const static std::regex re("^#[0-9a-fA-f]{6}$");
         std::smatch m{};
         return std::regex_match(text, m, re);
     }
 
     static bool is_valid_eye_color(const std::string& text) {
-        static const std::string colors[] = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
+        const static std::string colors[] = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
         return std::any_of(begin(colors), end(colors), [&](auto a) { return a == text; });
     }
 
