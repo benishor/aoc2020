@@ -49,13 +49,12 @@ public:
 
     static bool are_fields_present(const std::map<std::string, std::string>& document) {
         static std::string required_fields[] = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"};
-        int fields_found = 0;
         for (auto& key : required_fields) {
-            if (document.count(key)) {
-                fields_found++;
+            if (!document.count(key)) {
+                return false;
             }
         }
-        return fields_found == 7;
+        return true;
     }
 
     static bool are_fields_valid(const std::map<std::string, std::string>& document) {
