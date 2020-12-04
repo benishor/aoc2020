@@ -1,33 +1,34 @@
 #include <iostream>
 #include "solution.h"
 #include <algorithm>
+#include <functional>
 
 class day4 : public aoc::solution {
 public:
+    
     void run(std::istream& in, std::ostream& out) override {
-        auto documents = read_documents(in);
-
         auto valid_documents_1 = 0, valid_documents_2 = 0;
-        for (const auto& d : documents) {
+        visit_stream_documents(in, [&](const auto& d) {
             if (are_fields_present(d)) {
                 valid_documents_1++;
                 if (are_fields_valid(d)) {
                     valid_documents_2++;
                 }
             }
-        }
+        });
+
         out << valid_documents_1 << std::endl;
         out << valid_documents_2 << std::endl;
     }
 
-    static std::vector<std::map<std::string, std::string>> read_documents(std::istream& in) {
-        std::vector<std::map<std::string, std::string>> documents;
-
+    static void visit_stream_documents(std::istream& in,
+                                       const std::function<void ((
+                                               const std::map<std::string, std::string>&))>& visitor) {
         std::map<std::string, std::string> current_document;
         for (std::string line; std::getline(in, line);) {
             if (aoc::trim(line).empty()) {
                 if (!current_document.empty()) {
-                    documents.push_back(current_document);
+                    visitor(current_document);
                     current_document.clear();
                 }
             } else {
@@ -42,9 +43,8 @@ public:
             }
         }
         if (!current_document.empty()) {
-            documents.push_back(current_document);
+            visitor(current_document);
         }
-        return documents;
     }
 
     static bool are_fields_present(const std::map<std::string, std::string>& document) {
