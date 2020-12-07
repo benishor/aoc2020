@@ -46,7 +46,7 @@ public:
                                   "299\n"
                                   "675\n"
                                   "1456",
-                         .expectedOutput = "514579\n241861950"
+                         .expected_output = "514579\n241861950"
                  });
     }
 };

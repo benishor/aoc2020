@@ -5,7 +5,7 @@
 
 class day4 : public aoc::solution {
 public:
-    
+
     void run(std::istream& in, std::ostream& out) override {
         auto valid_documents_1 = 0, valid_documents_2 = 0;
         visit_stream_documents(in, [&](const auto& d) {
@@ -138,7 +138,7 @@ public:
                                   "hgt:59cm ecl:zzz\n"
                                   "eyr:2038 hcl:74454a iyr:2023\n"
                                   "pid:3556412378 byr:2007",
-                         .expectedOutput = "4\n0"
+                         .expected_output = "4\n0"
                  });
         add_test({
                          .name = "Second",
@@ -154,7 +154,7 @@ public:
                                   "eyr:2022\n"
                                   "\n"
                                   "iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719",
-                         .expectedOutput = "4\n4"
+                         .expected_output = "4\n4"
                  });
     }
 };

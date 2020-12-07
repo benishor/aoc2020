@@ -10,7 +10,7 @@ namespace aoc {
     struct test {
         std::string name;
         std::string input;
-        std::string expectedOutput;
+        std::string expected_output;
     };
 
     class solution {
@@ -46,11 +46,11 @@ namespace aoc {
 
             // right trim
             std::string actualOutput = std::regex_replace(out.str(), std::regex("\\s+$"), std::string(""));
-            if (actualOutput != test.expectedOutput) {
+            if (actualOutput != test.expected_output) {
 //            fmt::print(stderr, "FAILED\n\tinput: [{0}]\n\texpected: [{1}]\n\t but got: [{2}]\n",
 //                       test.input, test.expectedOutput, actualOutput);
                 fmt::print(stderr, "FAILED\n\texpected: [{1}]\n\t but got: [{2}]\n",
-                           test.input, test.expectedOutput, actualOutput);
+                           test.input, test.expected_output, actualOutput);
                 return false;
             }
             fmt::print(stderr, "OK\n");

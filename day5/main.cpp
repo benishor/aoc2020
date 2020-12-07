@@ -49,7 +49,7 @@ public:
         add_test({
                          .name = "First",
                          .input = "BFFFBBFRRR",
-                         .expectedOutput = "567"
+                         .expected_output = "567"
                  });
     }
 };

@@ -72,7 +72,7 @@ public:
                          .input = "1-3 a: abcde\n"
                                   "1-3 b: cdefg\n"
                                   "2-9 c: ccccccccc",
-                         .expectedOutput = "2\n1"
+                         .expected_output = "2\n1"
                  });
     }
 };

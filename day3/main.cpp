@@ -64,7 +64,7 @@ public:
                                   "#.##...#...\n"
                                   "#...##....#\n"
                                   ".#..#...#.#",
-                         .expectedOutput = "7\n336"
+                         .expected_output = "7\n336"
                  });
     }
 };
