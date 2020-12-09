@@ -56,8 +56,10 @@ namespace aoc {
             fmt::print(stderr, "OK\n");
         } catch (std::exception& e) {
             fmt::print(stderr, "FAILED\n\tCause: {0}\n", e.what());
+            return false;
         } catch (...) {
             fmt::print(stderr, "FAILED\n\tCause: uncaught exception\n");
+            return false;
         }
 
         return true;
@@ -137,7 +139,7 @@ namespace aoc {
     template<typename T>
     class permutations {
     public:
-        explicit permutations(std::initializer_list<T> data_) : data(data_) {
+        permutations(std::initializer_list<T> data_) : data(data_) {
             std::sort(data.begin(), data.end());
         }
 
