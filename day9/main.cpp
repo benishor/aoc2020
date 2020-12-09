@@ -2,13 +2,15 @@
 #include <deque>
 #include <algorithm>
 
+
 class day9 : public aoc::solution {
 protected:
 
-    std::deque<long long> window;
+    static const int WindowSize = 25;
+    using ElementType = long long;
 
     void run(std::istream& in, std::ostream& out) override {
-        auto elements = aoc::elements_from_stream<long long>(in);
+        auto elements = aoc::elements_from_stream<ElementType>(in);
 
         auto invalid_number = part_1(elements);
         out << invalid_number << std::endl;
@@ -17,9 +19,10 @@ protected:
         out << encryption_weakness << std::endl;
     }
 
-    int part_1(const std::vector<long long>& elements) {
+    static ElementType part_1(const std::vector<ElementType>& elements) {
+        std::deque<ElementType> window;
         for (const auto& e : elements) {
-            if (window.size() < 25) {
+            if (window.size() < WindowSize) {
                 window.push_back(e);
             } else {
                 if (is_number_in_window_as_sum(e, window)) {
@@ -34,17 +37,17 @@ protected:
         return -1;
     }
 
-    static bool is_number_in_window_as_sum(const long long& number, const std::deque<long long>& window) {
-        for (int i = 0; i < window.size() - 1; i++) {
-            for (int j = i + 1; j < window.size(); j++) {
+    static bool is_number_in_window_as_sum(const ElementType& number, const std::deque<long long>& window) {
+        for (size_t i = 0; i < window.size() - 1; i++) {
+            for (size_t j = i + 1; j < window.size(); j++) {
                 if ((window.at(i) + window.at(j)) == number) return true;
             }
         }
         return false;
     }
 
-    static long long part_2(const std::vector<long long>& elements, int invalid_number) {
-        long long running_sum = 0L;
+    static ElementType part_2(const std::vector<ElementType>& elements, ElementType invalid_number) {
+        ElementType running_sum = 0L;
 
         auto start = elements.begin();
         auto end = elements.begin();
@@ -66,6 +69,7 @@ protected:
     }
 
     void register_tests() override {
+        // WindowSize must be 5 in order for the test to work
         add_test(aoc::test{
                 .name = "First",
                 .input = "35\n"
@@ -91,7 +95,6 @@ protected:
                 .expected_output = "127\n62"
         });
     }
-
 };
 
 int main(int argc, char** argv) {
