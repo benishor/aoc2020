@@ -1,9 +1,7 @@
 #include <iostream>
 #include "solution.h"
-#include <algorithm>
 #include <functional>
 #include <utility>
-
 
 enum class operation {
     acc,
@@ -20,7 +18,7 @@ struct instruction {
         flags |= 1;
     }
 
-    bool is_visited() const {
+    [[nodiscard]] bool is_visited() const {
         return flags & 1;
     }
 
@@ -131,7 +129,7 @@ public:
 
 private:
     bool debug{false};
-    int ip{0};
+    size_t ip{0};
     int accumulator{0};
     bool infinite_loop_detected{false};
     bool halted{false};
@@ -184,7 +182,7 @@ public:
     }
 
     static int part_2(const program& pgm) {
-        for (int i = 0; i < pgm.size(); i++) {
+        for (size_t i = 0; i < pgm.size(); i++) {
             if (pgm.at(i).op == operation::nop) {
                 program current_program = pgm;
                 current_program[i].op = operation::jmp;

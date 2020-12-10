@@ -36,8 +36,8 @@ public:
     static unsigned long tree_encounters(const std::vector<std::string>& map, int slope_x, int slope_y) {
         auto width = map[0].size();
         auto height = map.size();
-        auto x = 0;
-        auto y = 0;
+        size_t x{0};
+        size_t y{0};
         auto trees_encountered = 0;
         while (y < height) {
             if (map[y][x] == '#') {

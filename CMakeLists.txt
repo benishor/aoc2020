@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "")
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE CACHE BOOL "")
 
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 function(aoc_day num)
     file(GLOB ACTUAL_SOURCES "day${num}/*.cpp")
     add_executable("day${num}" ${ACTUAL_SOURCES})

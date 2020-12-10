@@ -57,13 +57,13 @@ public:
     }
 
     static bool is_password_valid_2(const password_info& p) {
-        if (p.low >= p.text.size() || p.high > p.text.size()) {
+        if (p.low >= static_cast<int>(p.text.size()) || p.high > static_cast<int>(p.text.size())) {
             return false;
         }
         auto low = p.low - 1;
         auto high = p.high - 1;
-        return p.text.at(low) == p.letter && p.text.at(high) != p.letter ||
-               p.text.at(high) == p.letter && p.text.at(low) != p.letter;
+        return (p.text.at(low) == p.letter && p.text.at(high) != p.letter) ||
+               (p.text.at(high) == p.letter && p.text.at(low) != p.letter);
     }
 
     void register_tests() override {

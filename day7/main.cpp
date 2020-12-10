@@ -1,8 +1,6 @@
 #include <iostream>
 #include "solution.h"
-#include <algorithm>
 #include <functional>
-
 
 struct bag {
     std::string color;
@@ -10,7 +8,6 @@ struct bag {
 };
 
 std::map<std::string, std::shared_ptr<bag>> bags;
-
 
 class day7 : public aoc::solution {
 public:

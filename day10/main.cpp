@@ -5,7 +5,7 @@
 
 class dag {
 public:
-    
+
     void add_edge(int from_node, int to_node) {
         edges[from_node].push_back(to_node);
     }

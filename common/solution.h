@@ -71,11 +71,12 @@ namespace aoc {
 
     int solution::delegate_execution(int argc, char** argv) {
         if (argc > 1 && !strcmp(argv[1], "--test")) {
+            int exitCode = 0;
             if (!tests.empty()) {
-                int exitCode = run_tests() ? 0 : 1;
+                exitCode = run_tests() ? 0 : 1;
             }
             testing::InitGoogleTest(&argc, argv);
-            return RUN_ALL_TESTS();
+            return exitCode | RUN_ALL_TESTS();
         } else if (argc > 1 && !strcmp(argv[1], "--help")) {
             fmt::print("Usage: {0} <input> [--test|--help]\n", argv[0]);
             fmt::print("\t - if no argument is provided, STDIN is used as input and result is printed to STDOUT\n");

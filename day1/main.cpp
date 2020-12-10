@@ -5,8 +5,8 @@
 class day1 : public aoc::solution {
 public:
     static void part1(const std::vector<int>& numbers, std::ostream& out) {
-        for (int i = 0; i < numbers.size() - 1; i++) {
-            for (int j = i + 1; j < numbers.size(); j++) {
+        for (size_t i = 0; i < numbers.size() - 1; i++) {
+            for (size_t j = i + 1; j < numbers.size(); j++) {
                 auto a = numbers[i], b = numbers[j];
                 if (a + b == 2020) {
                     out << (a * b) << std::endl;
@@ -17,9 +17,9 @@ public:
     }
 
     static void part2(const std::vector<int>& numbers, std::ostream& out) {
-        for (int i = 0; i < numbers.size() - 2; i++) {
-            for (int j = i + 1; j < numbers.size() - 1; j++) {
-                for (int k = j + 1; k < numbers.size(); k++) {
+        for (size_t i = 0; i < numbers.size() - 2; i++) {
+            for (size_t j = i + 1; j < numbers.size() - 1; j++) {
+                for (size_t k = j + 1; k < numbers.size(); k++) {
                     auto a = numbers[i], b = numbers[j], c = numbers[k];
                     if (a + b + c == 2020) {
                         out << (a * b * c) << std::endl;

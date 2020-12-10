@@ -1,6 +1,5 @@
 #include <iostream>
 #include "solution.h"
-#include <algorithm>
 #include <functional>
 
 class day4 : public aoc::solution {

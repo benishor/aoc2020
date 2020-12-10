@@ -1,13 +1,10 @@
 #include <iostream>
 #include "solution.h"
-#include <algorithm>
-#include <functional>
 
 class day6 : public aoc::solution {
 public:
 
     void run(std::istream& in, std::ostream& out) override {
-
         std::map<char, int> group_questions;
         int group_members = 0;
         auto part_1 = 0;
@@ -42,8 +39,8 @@ public:
             }
         }
 
-        std::cout << part_1 << std::endl;
-        std::cout << part_2 << std::endl;
+        out << part_1 << std::endl;
+        out << part_2 << std::endl;
     }
 };
 

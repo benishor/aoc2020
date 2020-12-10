@@ -1,12 +1,10 @@
 #include <iostream>
 #include "solution.h"
-#include <algorithm>
-#include <functional>
 
 class day5 : public aoc::solution {
 public:
 
-    unsigned int id_from_string(std::string& text) {
+    static unsigned int id_from_string(std::string& text) {
         unsigned int id = 0;
         for (char c : text) {
             id <<= 1;
@@ -18,7 +16,7 @@ public:
     }
 
     void run(std::istream& in, std::ostream& out) override {
-        auto max_id = 0;
+        unsigned int max_id = 0;
         std::map<unsigned int, bool> seats_taken;
         for (std::string line; std::getline(in, line);) {
             auto id = id_from_string(aoc::trim(line));

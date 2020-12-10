@@ -51,7 +51,7 @@ protected:
 
         auto start = elements.begin();
         auto end = elements.begin();
-        for (const auto& e : elements) {
+        while (end != elements.end()) {
             running_sum += *end++;
             while (running_sum > invalid_number && start < end) {
                 running_sum -= *start++;
