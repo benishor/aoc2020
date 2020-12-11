@@ -193,7 +193,7 @@ protected:
                          "LLLLLLLLLL\n"
                          "L.LLLLLL.L\n"
                          "L.LLLLL.LL",
-                .expected_output = "37"
+                .expected_output = "37\n26"
         });
     }
 };
