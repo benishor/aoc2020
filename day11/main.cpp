@@ -8,6 +8,9 @@ enum class seat_type {
 
 class seat_map {
 public:
+
+    seat_map(const seat_map& rhs) = default;
+
     explicit seat_map(std::istream& in) :
             width(0), height(0) {
         for (std::string line; std::getline(in, line);) {
@@ -167,14 +170,14 @@ private:
 class day11 : public aoc::solution {
 protected:
     void run(std::istream& in, std::ostream& out) override {
-        seat_map map{in};
-        while (map.run_round_2()) {
-            map.dump();
-            std::cout << std::endl;
-        }
-//        map.run_round();
-//        map.dump();
-        out << map.occupied_seats() << std::endl;
+        seat_map map_1{in};
+        auto map_2 = map_1;
+
+        while (map_1.run_round());
+        out << map_1.occupied_seats() << std::endl;
+
+        while (map_2.run_round_2());
+        out << map_2.occupied_seats() << std::endl;
     }
 
     void register_tests() override {
