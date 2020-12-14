@@ -1,7 +1,7 @@
 #include <numeric>
 #include "solution.h"
 
-using ElementType = unsigned long long;
+using element_type = unsigned long long;
 
 class day13 : public aoc::solution {
 protected:
@@ -12,9 +12,9 @@ protected:
 
         std::getline(in, line);
         std::stringstream ss{aoc::trim(line)};
-        ElementType earliest_bus_id = 0;
-        ElementType minutes_to_wait = std::numeric_limits<ElementType>::max();
-        std::map<ElementType, ElementType> offset_to_bus;
+        element_type earliest_bus_id = 0;
+        element_type minutes_to_wait = std::numeric_limits<element_type>::max();
+        std::map<element_type, element_type> offset_to_bus;
         int offset = 0;
         while (std::getline(ss, line, ',')) {
             if (line != "x") {
@@ -33,12 +33,12 @@ protected:
             }
             offset++;
         }
-        ElementType part_1 = earliest_bus_id * minutes_to_wait;
+        element_type part_1 = earliest_bus_id * minutes_to_wait;
         out << part_1 << std::endl;
 
         // part 2
-        ElementType timestamp = 0;
-        ElementType increment = 1;
+        element_type timestamp = 0;
+        element_type increment = 1;
         for (auto& kv : offset_to_bus) {
             auto bus_offset = kv.first;
             auto bus_frequency = kv.second;
