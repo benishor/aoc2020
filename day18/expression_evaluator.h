@@ -12,7 +12,6 @@
 template<typename T>
 class expression_evaluator {
 public:
-
     explicit expression_evaluator(std::function<int(char)> opPrecedence) : op_precedence(std::move(opPrecedence)) {}
 
     T evaluate(const std::string& expression) {
@@ -36,39 +35,31 @@ public:
                 i--;
             } else if (c == ')') {
                 while (!operators.empty() && operators.top() != '(') {
-                    auto op = operators.top();
-                    operators.pop();
-                    auto b = operands.top();
-                    operands.pop();
-                    auto a = operands.top();
-                    operands.pop();
-                    operands.push(apply_operation(op, a, b));
+                    apply_top_operator(operands, operators);
                 }
                 operators.pop(); // pop ( from the stack
             } else {
                 // must be an operator
                 while (!operators.empty() && op_precedence(operators.top()) >= op_precedence(c)) {
-                    auto op = operators.top();
-                    operators.pop();
-                    auto b = operands.top();
-                    operands.pop();
-                    auto a = operands.top();
-                    operands.pop();
-                    operands.push(apply_operation(op, a, b));
+                    apply_top_operator(operands, operators);
                 }
                 operators.push(c);
             }
         }
         while (!operators.empty()) {
-            auto op = operators.top();
-            operators.pop();
-            auto b = operands.top();
-            operands.pop();
-            auto a = operands.top();
-            operands.pop();
-            operands.push(apply_operation(op, a, b));
+            apply_top_operator(operands, operators);
         }
         return operands.top();
+    }
+
+    inline void apply_top_operator(std::stack<long>& operands, std::stack<char>& operators) {
+        auto op = operators.top();
+        operators.pop();
+        auto b = operands.top();
+        operands.pop();
+        auto a = operands.top();
+        operands.pop();
+        operands.push(apply_operation(op, a, b));
     }
 
 private:

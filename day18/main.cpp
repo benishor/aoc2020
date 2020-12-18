@@ -30,7 +30,6 @@ class day18 : public aoc::solution {
 protected:
 
     void run(std::istream& in, std::ostream& out) override {
-
         expression_evaluator<long> calculator_part1{part1_operator_precedence};
         expression_evaluator<long> calculator_part2{part2_operator_precedence};
 
