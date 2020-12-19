@@ -137,6 +137,17 @@ namespace aoc {
         return elements;
     }
 
+    std::vector<std::string> split_string(const std::string& in, std::string delimiter) {
+        std::vector<std::string> result{};
+        size_t last{0}, next;
+        while ((next = in.find(delimiter, last)) != std::string::npos) {
+            result.push_back(in.substr(last, next - last));
+            last = next + 1;
+        }
+        result.push_back(in.substr(last));
+        return result;
+    }
+
     template<typename T>
     class permutations {
     public:
